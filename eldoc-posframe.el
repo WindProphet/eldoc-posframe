@@ -39,6 +39,11 @@
   :prefix "eldoc-posframe-"
   :group 'eldoc)
 
+(defcustom eldoc-posframe-display-at-point nil
+  "Display postframe at point."
+  :type 'boolean
+  :group 'eldoc-posframe)
+
 (defvar eldoc-posframe-buffer "*eldoc-posframe-buffer*"
   "The posframe buffer name use by eldoc-posframe.")
 
@@ -66,8 +71,8 @@
          :string (apply 'format format-string args)
          :background-color (face-background 'eldoc-posframe-background-face nil t)
          :internal-border-width 5
-         :left-fringe 10
-         :poshandler 'posframe-poshandler-frame-top-right-corner)
+         :left-fringe (unless eldoc-posframe-display-at-point 10)
+         :poshandler (unless eldoc-posframe-display-at-point 'posframe-poshandler-frame-top-right-corner))
         (dolist (hook eldoc-posframe-hide-posframe-hooks)
           (add-hook hook #'eldoc-posframe-maybe-hide-posframe nil t)))
     (eldoc-posframe-hide-posframe)))
