@@ -52,19 +52,25 @@
   (dolist (hook eldoc-posframe-hide-posframe-hooks)
     (remove-hook hook #'eldoc-posframe-hide-posframe t)))
 
+(defun eldoc-posframe-maybe-hide-posframe ()
+  "Hide messages if command was not a `self-insert-command'."
+  (unless (eq this-command 'self-insert-command)
+    (eldoc-posframe-hide-posframe)))
+
 (defun eldoc-posframe-show-posframe (format-string &rest args)
   "Display FORMAT-STRING and ARGS, using posframe.el library."
-  (eldoc-posframe-hide-posframe)
-  (when format-string
-    (posframe-show
-     eldoc-posframe-buffer
-     :string (apply 'format format-string args)
-     :background-color (face-background 'eldoc-posframe-background-face nil t)
-     :internal-border-width 5
-     :left-fringe 10
-     :poshandler 'posframe-poshandler-frame-top-right-corner)
-    (dolist (hook eldoc-posframe-hide-posframe-hooks)
-      (add-hook hook #'eldoc-posframe-hide-posframe nil t))))
+  (if format-string
+      (progn
+        (posframe-show
+         eldoc-posframe-buffer
+         :string (apply 'format format-string args)
+         :background-color (face-background 'eldoc-posframe-background-face nil t)
+         :internal-border-width 5
+         :left-fringe 10
+         :poshandler 'posframe-poshandler-frame-top-right-corner)
+        (dolist (hook eldoc-posframe-hide-posframe-hooks)
+          (add-hook hook #'eldoc-posframe-maybe-hide-posframe nil t)))
+    (eldoc-posframe-hide-posframe)))
 
 (defface eldoc-posframe-background-face
   '((t :inherit highlight))
