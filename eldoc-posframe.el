@@ -39,9 +39,19 @@
   :prefix "eldoc-posframe-"
   :group 'eldoc)
 
-(defcustom eldoc-posframe-display-at-point nil
+(defcustom eldoc-posframe-padding 5
+  "Padding inside the tooltips."
+  :type 'integer
+  :group 'eldoc-posframe)
+
+(defcustom eldoc-posframe-left-fringe 10
+  "Fringe on the left side."
+  :type 'integer
+  :group 'eldoc-posframe)
+
+(defcustom eldoc-posframe-poshandler #'posframe-poshandler-frame-top-right-corner
   "Display postframe at point."
-  :type 'boolean
+  :type 'function
   :group 'eldoc-posframe)
 
 (defvar eldoc-posframe-buffer "*eldoc-posframe-buffer*"
@@ -70,9 +80,9 @@
          eldoc-posframe-buffer
          :string (apply 'format format-string args)
          :background-color (face-background 'eldoc-posframe-background-face nil t)
-         :internal-border-width 5
-         :left-fringe (unless eldoc-posframe-display-at-point 10)
-         :poshandler (unless eldoc-posframe-display-at-point 'posframe-poshandler-frame-top-right-corner))
+         :internal-border-width eldoc-posframe-padding
+         :left-fringe eldoc-posframe-left-fringe
+         :poshandler eldoc-posframe-poshandler)
         (dolist (hook eldoc-posframe-hide-posframe-hooks)
           (add-hook hook #'eldoc-posframe-maybe-hide-posframe nil t)))
     (eldoc-posframe-hide-posframe)))
