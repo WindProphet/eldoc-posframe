@@ -131,9 +131,9 @@ Only the `background' is used in this face."
 
   (if eldoc-posframe-mode
       (progn
-        (setq eldoc-message-function #'eldoc-posframe-show-posframe)
+        (setq-local eldoc-message-function #'eldoc-posframe-show-posframe)
         (eldoc-mode 1))
-    (setq eldoc-message-function #'eldoc-minibuffer-message)))
+    (setq-local eldoc-message-function #'eldoc-minibuffer-message)))
 
 ;;;###autoload
 (define-globalized-minor-mode global-eldoc-posframe-mode eldoc-posframe-mode eldoc-posframe-enable
