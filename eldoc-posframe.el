@@ -54,11 +54,10 @@
   :type 'integer
   :group 'eldoc-posframe)
 
-(defcustom eldoc-posframe-width 60
-  "Posframe width."
+(defcustom eldoc-posframe-max-width 60
+  "Posframe max width."
   :type 'integer
   :group 'eldoc-posframe)
-
 
 (defcustom eldoc-posframe-poshandler #'posframe-poshandler-frame-top-right-corner
   "Display posframe at point."
@@ -94,7 +93,7 @@
          :internal-border-width eldoc-posframe-padding
          :left-fringe eldoc-posframe-left-fringe
          :right-fringe eldoc-posframe-right-fringe
-         :width eldoc-posframe-width
+         :max-width eldoc-posframe-max-width
          :poshandler eldoc-posframe-poshandler)
         (dolist (hook eldoc-posframe-hide-posframe-hooks)
           (add-hook hook #'eldoc-posframe-maybe-hide-posframe nil t)))
