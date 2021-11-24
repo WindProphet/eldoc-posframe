@@ -49,8 +49,19 @@
   :type 'integer
   :group 'eldoc-posframe)
 
+(defcustom eldoc-posframe-right-fringe 10
+  "Fringe on the left side."
+  :type 'integer
+  :group 'eldoc-posframe)
+
+(defcustom eldoc-posframe-width 60
+  "Posframe width."
+  :type 'integer
+  :group 'eldoc-posframe)
+
+
 (defcustom eldoc-posframe-poshandler #'posframe-poshandler-frame-top-right-corner
-  "Display postframe at point."
+  "Display posframe at point."
   :type 'function
   :group 'eldoc-posframe)
 
@@ -82,6 +93,8 @@
          :background-color (face-background 'eldoc-posframe-background-face nil t)
          :internal-border-width eldoc-posframe-padding
          :left-fringe eldoc-posframe-left-fringe
+         :right-fringe eldoc-posframe-right-fringe
+         :width eldoc-posframe-width
          :poshandler eldoc-posframe-poshandler)
         (dolist (hook eldoc-posframe-hide-posframe-hooks)
           (add-hook hook #'eldoc-posframe-maybe-hide-posframe nil t)))
